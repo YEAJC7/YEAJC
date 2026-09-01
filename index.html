@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>YEAJC</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #050505;
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Hintergrundbild */
+    .background {
+      position: fixed;
+      top: -5%;
+      left: -5%;
+      width: 110%;
+      height: 110%;
+
+      z-index: -2;
+
+      background-image:
+        linear-gradient(
+          rgba(0, 0, 0, 0.65),
+          rgba(0, 0, 0, 0.85)
+        ),
+        url("IMG_9686.jpeg");
+
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      transition: transform 0.2s ease-out;
+    }
+
+    /* Scanlines */
+    .scanlines {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10;
+
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          transparent 0px,
+          transparent 3px,
+          rgba(255,255,255,0.025) 4px
+        );
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+
+      padding: 25px 8%;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+
+      z-index: 5;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 8px;
+
+      color: white;
+
+      text-shadow:
+        3px 0 #a020f0,
+        -3px 0 #00eaff;
+    }
+
+    nav a {
+      color: #aaa;
+      text-decoration: none;
+      margin-left: 25px;
+      font-size: 12px;
+      letter-spacing: 3px;
+    }
+
+    nav a:hover {
+      color: #a020f0;
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 100vh;
+
+      display: flex;
+      flex-direction: column;
+
+      justify-content: center;
+      align-items: center;
+
+      text-align: center;
+
+      padding: 100px 20px;
+    }
+
+    .glitch {
+      font-size: clamp(70px, 15vw, 180px);
+      font-weight: bold;
+
+      letter-spacing: 20px;
+
+      color: white;
+
+      text-shadow:
+        5px 0 #a020f0,
+        -5px 0 #00eaff;
+
+      animation: glitch 4s infinite;
+    }
+
+    @keyframes glitch {
+
+      0%, 90%, 100% {
+        transform: translate(0);
+      }
+
+      92% {
+        transform: translate(-5px, 2px);
+      }
+
+      94% {
+        transform: translate(5px, -2px);
+      }
+
+      96% {
+        transform: translate(0);
+      }
+
+    }
+
+    .subtitle {
+      margin-top: 25px;
+
+      color: #aaa;
+
+      font-size: 12px;
+
+      letter-spacing: 5px;
+    }
+
+    .enter {
+      margin-top: 45px;
+
+      padding: 16px 50px;
+
+      border: 1px solid #a020f0;
+
+      color: white;
+
+      text-decoration: none;
+
+      letter-spacing: 5px;
+
+      transition: 0.3s;
+    }
+
+    .enter:hover {
+      background: #a020f0;
+
+      box-shadow:
+        0 0 20px #a020f0,
+        0 0 60px #a020f0;
+    }
+
+    /* UNKNOWN */
+
+    .unknown {
+
+      min-height: 100vh;
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      padding: 40px;
+    }
+
+    .box {
+
+      max-width: 700px;
+
+      padding: 60px 40px;
+
+      text-align: center;
+
+      background: rgba(0,0,0,0.75);
+
+      border: 1px solid #333;
+
+      backdrop-filter: blur(10px);
+    }
+
+    .box h2 {
+
+      font-size: 40px;
+
+      letter-spacing: 8px;
+
+      margin-bottom: 30px;
+    }
+
+    .box p {
+
+      color: #aaa;
+
+      line-height: 2;
+
+      letter-spacing: 2px;
+    }
+
+    /* SIGNAL */
+
+    .signal {
+
+      min-height: 70vh;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: center;
+
+      align-items: center;
+
+      text-align: center;
+
+      background: rgba(0,0,0,0.6);
+    }
+
+    .signal h2 {
+
+      font-size: 40px;
+
+      letter-spacing: 8px;
+
+      margin-bottom: 30px;
+    }
+
+    .signal p {
+
+      color: #a020f0;
+
+      letter-spacing: 5px;
+    }
+
+    .secret-button {
+
+      margin-top: 40px;
+
+      padding: 15px 40px;
+
+      background: transparent;
+
+      border: 1px solid #a020f0;
+
+      color: white;
+
+      cursor: pointer;
+
+      letter-spacing: 4px;
+
+      transition: 0.3s;
+    }
+
+    .secret-button:hover {
+
+      background: #a020f0;
+
+      box-shadow: 0 0 30px #a020f0;
+    }
+
+    #secretMessage {
+
+      margin-top: 25px;
+
+      color: #a020f0;
+
+      opacity: 0;
+
+      transition: 1s;
+
+      letter-spacing: 4px;
+    }
+
+    footer {
+
+      text-align: center;
+
+      padding: 40px;
+
+      background: #050505;
+
+      color: #555;
+
+      font-size: 10px;
+
+      letter-spacing: 4px;
+    }
+
+    @media (max-width: 600px) {
+
+      nav a {
+        display: none;
+      }
+
+      .glitch {
+        letter-spacing: 8px;
+      }
+
+      .box {
+        padding: 40px 20px;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- Hintergrund -->
+  <div class="background"></div>
+
+  <!-- Scanlines -->
+  <div class="scanlines"></div>
+
+
+  <!-- Navigation -->
+  <nav>
+
+    <div class="logo">
+      YEAJC
+    </div>
+
+    <div>
+      <a href="#home">HOME</a>
+      <a href="#unknown">UNKNOWN</a>
+      <a href="#signal">SIGNAL</a>
+    </div>
+
+  </nav>
+
+
+  <!-- Startseite -->
+  <section class="hero" id="home">
+
+    <h1 class="glitch">
+      YEAJC
+    </h1>
+
+    <p class="subtitle">
+      NOT EVERYTHING IS MEANT TO BE UNDERSTOOD.
+    </p>
+
+    <a href="#unknown" class="enter">
+      ENTER
+    </a>
+
+  </section>
+
+
+  <!-- Unknown Bereich -->
+  <section class="unknown" id="unknown">
+
+    <div class="box">
+
+      <h2>UNKNOWN</h2>
+
+      <p>
+
+        Es gibt Orte im Internet,
+        die niemand sucht.
+
+        <br><br>
+
+        Und trotzdem findest du sie.
+
+        <br><br>
+
+        Vielleicht war es Zufall.
+
+        <br>
+
+        Vielleicht hat YEAJC dich gefunden.
+
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- Signal -->
+  <section class="signal" id="signal">
+
+    <h2>THE SIGNAL</h2>
+
+    <p>
+      CONNECTION ESTABLISHED
+    </p>
+
+    <button class="secret-button" onclick="revealSecret()">
+      DO NOT CLICK
+    </button>
+
+    <p id="secretMessage">
+      YOU ARE NOW PART OF YEAJC.
+    </p>
+
+  </section>
+
+
+  <!-- Footer -->
+  <footer>
+
+    YEAJC © 2026
+
+    <br><br>
+
+    THE SIGNAL IS STILL ACTIVE.
+
+  </footer>
+
+
+  <!-- JavaScript für Parallax -->
+  <script>
+
+    const background = document.querySelector(".background");
+
+    window.addEventListener("scroll", () => {
+
+      let scrollPosition = window.scrollY;
+
+      background.style.transform =
+        `translateY(${scrollPosition * -0.15}px)`;
+
+    });
+
+
+    function revealSecret() {
+
+      const message =
+        document.getElementById("secretMessage");
+
+      message.style.opacity = "1";
+
+    }
+
+  </script>
+
+</body>
+</html>
